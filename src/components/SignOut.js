@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import signOutAction from '../store/action-creators/signOutAction'
+// import signOutAction from '../store/action-creators/signOutAction'
+import {signOutAction} from '../store/actions-saga'
 import {Button} from '@material-ui/core'
 
 import {makeStyles} from "@material-ui/core"
