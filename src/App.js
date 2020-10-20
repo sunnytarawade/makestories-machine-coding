@@ -8,6 +8,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import NotFound from './components/NotFound'
+import Loading from './components/Loading';
 //Import Components
 
 function App() {
@@ -21,20 +22,24 @@ function App() {
       
 
 {/* <Navbar/> */}
-          
+
+         
       <BrowserRouter>
         
-        
+      {/* <Loading/> */}
         <Switch>
+        
           <Route exact path="/" component={SignIn} ></Route>
-          <Route exact path="/signin" component={SignIn} ></Route>
+          <Route  path="/signin" component={SignIn} ></Route>
           
-          <Route exact path="/signup" component={SignUp}></Route>
+          <Route  path="/signup" component={SignUp}></Route>
           
-          <Route exact path="/dashboard" component={Dashboard}></Route>
+          <Route  path="/dashboard" component={Dashboard}></Route>
           <Route component={NotFound}></Route>
+          
         </Switch>
       </BrowserRouter>
+       
     </div>
   );
 }

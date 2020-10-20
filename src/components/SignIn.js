@@ -2,10 +2,11 @@ import React,{useState,useEffect} from 'react'
 import {connect} from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import Navbar from './Navbar'
-import signInAction from '../store/action-creators/signInAction'
-
+// import signInAction from '../store/action-creators/signInAction'
+import {signInAction} from '../store/actions-saga'
 import {makeStyles,Paper, TextField, Grid, Container, Button, Typography} from "@material-ui/core"
 import {lightBlue,grey} from "@material-ui/core/colors"
+import { testAction } from '../store/actions-saga'
 const styles = makeStyles({
     paper : {
         
@@ -55,6 +56,7 @@ function SignIn(props) {
     const handleSubmit = (e)=>{
         
         e.preventDefault()
+        props.startLoading()
         console.log(userCredentials)
         props.signIn(userCredentials)
     }
@@ -113,14 +115,16 @@ const mapStateToProps = (state)=>{
 
     return{
         // user : state.authReducer.user
-        user : state.user
+        user : state.userReducer.user
     }
 }
 
 const mapDispatchToProps = (dispatch)=>{
     
         return{
-            signIn : (userLoginCredentials)=>{dispatch(signInAction(userLoginCredentials))}
+            signIn : (userLoginCredentials)=>{dispatch(signInAction(userLoginCredentials))},
+            startLoading : ()=>{dispatch({type:"LOADING_START"})}
+            // testSaga : (name)=>{dispatch(testAction(name))}
         }
     
 }

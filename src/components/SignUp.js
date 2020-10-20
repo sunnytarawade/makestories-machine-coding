@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import signUpAction from '../store/action-creators/signUpAction'
+// import signUpAction from '../store/action-creators/signUpAction'
+import {signUpAction} from '../store/actions-saga'
+
 import Navbar from './Navbar'
 import Avatar from '../images/Avatar.jpg'
 import {makeStyles,Paper, TextField, Grid, Container, Button, Typography} from "@material-ui/core"
@@ -81,6 +83,7 @@ function SignUp(props) {
     const handleSubmit = (e)=>{
         
         e.preventDefault()
+        props.startLoading()
         console.log(userCredentials)
         props.signUp(userCredentials)
     }
@@ -144,9 +147,9 @@ function SignUp(props) {
             <Button fullWidth className={classes.buttonImg} variant="contained" component="label"> UPLOAD PHOTO <input type="file" id="photo" onChange={handlePhotoChange} accept="image/*" style={{ display: "none" }}/></Button>
             <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="text" id="fname" label="first name" required></TextField>
             <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="text" id="lname" label="last name" required></TextField>
-            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="number" id="phone" label="phone number" required></TextField>
-            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="date" id="dob" label="" required></TextField>
-            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} multiline type="text" id="address" label="address" required></TextField>
+            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="number" id="phone" label="phone number" ></TextField>
+            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="date" id="dob" label="" ></TextField>
+            <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} multiline type="text" id="address" label="address"></TextField>
             <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="text" id="email" label="email" required></TextField>
             <TextField className={classes.textfield} variant="outlined" fullWidth onChange={handleChange} type="password" id="password" label="password" required></TextField>
             <Button fullWidth className={classes.button}  variant="contained" type="submit">Sign Up</Button>
@@ -183,14 +186,17 @@ function SignUp(props) {
 
 const mapStateToProps = (state)=>{
     return{
-        user : state.user
+        user : state.userReducer.user
     }
 }
 
 const mapDispatchToProps = (dispatch)=>{
     
         return{
-            signUp : (userCredentials)=>{dispatch(signUpAction(userCredentials))}
+            // signUp : (userCredentials)=>{dispatch(signUpAction(userCredentials))}
+            signUp : (userCredentials)=>{dispatch(signUpAction(userCredentials))},
+            startLoading : ()=>{dispatch({type:"LOADING_START"})}
+            
         }
     
 }
